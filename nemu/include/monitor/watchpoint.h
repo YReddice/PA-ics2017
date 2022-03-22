@@ -8,8 +8,15 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
-
+  int oldValue;
+  char expr[32];
+  int hitTimes;
 
 } WP;
+
+bool new_wp(char *arg);
+bool free_wp(int no);
+void print_wp();
+bool watch_wp();
 
 #endif
