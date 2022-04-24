@@ -86,6 +86,7 @@ static inline void restart() {
   //pa2.part1: init eflags register
   unsigned int origin = 2;
   memcpy(&cpu.eflags, &origin, sizeof(cpu.eflags));
+  
 #ifdef DIFF_TEST
   init_qemu_reg();
 #endif
