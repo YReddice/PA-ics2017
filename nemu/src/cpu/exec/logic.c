@@ -13,7 +13,16 @@ make_EHelper(and) {
 }
 
 make_EHelper(xor) {
-  TODO();
+  // TODO();
+  rtl_xor(&t2, &id_dest->val, &id_src->val);
+  operand_write(id_dest, &t2);
+
+  //change eflags
+  //SF ZF
+  rtl_update_ZFSF(&t2, id_dest->width);
+  //CF OF
+  rtl_set_CF(&tzero);
+  rtl_set_OF(&tzero);
 
   print_asm_template2(xor);
 }
