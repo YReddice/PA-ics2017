@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
-
+#define DIFF_TEST
 typedef uint8_t bool;
 
 typedef uint32_t rtlreg_t;
