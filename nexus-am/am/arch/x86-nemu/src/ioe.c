@@ -9,7 +9,10 @@ void _ioe_init() {
 }
 
 unsigned long _uptime() {
-  return 0;
+  //pa2.pary3 :clock
+  unsigned long ms=inl(RTC_PORT)-boot_time;
+  return ms;
+  // return 0;
 }
 
 uint32_t* const fb = (uint32_t *)0x40000;
@@ -22,9 +25,15 @@ _Screen _screen = {
 extern void* memcpy(void *, const void *, int);
 
 void _draw_rect(const uint32_t *pixels, int x, int y, int w, int h) {
-  int i;
-  for (i = 0; i < _screen.width * _screen.height; i++) {
-    fb[i] = i;
+  // int i;
+  // for (i = 0; i < _screen.width * _screen.height; i++) {
+  //   fb[i] = i;
+  // }
+  int temp = (w>_screen.width-x) ? _screen.width: w;
+  int cp_bytes = sizeof(uint32_t) * temp;
+  for (int j = 0; j < h && y + j < _screen.height; j ++) {
+    memcpy(&fb[(y + j) * _screen.width + x], pixels, cp_bytes);
+    pixels += w;
   }
 }
 
@@ -32,5 +41,8 @@ void _draw_sync() {
 }
 
 int _read_key() {
-  return _KEY_NONE;
+  if (inb(0x64))
+    return inl(0x60);
+  else
+    return _KEY_NONE;
 }
